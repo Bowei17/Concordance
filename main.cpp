@@ -317,19 +317,12 @@ void CreateLine( LinePtr & head, LinePtr & tail ) {
     tail = head ;
     head -> line = gLine ;
     CreateColumn( head -> firstAppearAt, head -> firstAppearAt ) ;
+    return ;
   } // if 
-  else if ( head -> line == gLine ) {
-    
-    
-  } // if  
-  else if ( head -> line > gLine ) {
-    
-    
-    
-  } // if  
-    
-    
-  
+  else if ( head -> line == gLine )
+    return CreateColumn( head -> firstAppearAt, head -> firstAppearAt ) ;   
+  else if ( head -> line > gLine )
+    return CreateLine( head -> next, tail ) ;
   
 } //CreatLine()
 
