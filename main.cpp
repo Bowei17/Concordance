@@ -53,8 +53,8 @@ typedef char Str100[100] ;
 
 charPtr GetToken( TokenType & type ) ;
 void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) ;
-void CreateLine( LinePtr & head, LinePtr & tail ) ;
-void CreateColumn( ColumnPtr & head, ColumnPtr & tail ) ;
+void CreateLine( LinePtr & head, LinePtr & tail, int length ) ;
+void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
@@ -276,6 +276,7 @@ charPtr GetToken( TokenType & type ) {
 
 void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) {
   TokenPtr temp = NULL ;
+  int tokenLength = strlen( input ) ;
   
   if ( walkr == NULL ) {
     walkr = new Token ;
@@ -285,8 +286,8 @@ void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) {
     walkr -> next = NULL ;
     walkr -> firstAppearOn = NULL ;
     walkr -> lastAppearOn = NULL ;
-    gRear = walkr ;
-    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    gRear = walkr ;   
+    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn, tokenLength ) ;
     return ; 
   } // if
   else if ( strcmp( input, walkr -> tokenStr ) < 0 ) {
@@ -298,11 +299,11 @@ void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) {
     walkr -> type = type ;
     walkr -> firstAppearOn = NULL ;
     walkr -> lastAppearOn = NULL ;
-    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn, tokenLength ) ;
     return ;
   } // if  
   else if ( strcmp( input, walkr -> tokenStr ) == 0 )
-    return CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    return CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn, tokenLength ) ;
     
   else if ( strcmp( input, walkr -> tokenStr ) > 0 )
     return CreateToken( walkr -> next, input, type ) ;
@@ -310,32 +311,33 @@ void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) {
 } // CreatToken()
 
 
-void CreateLine( LinePtr & head, LinePtr & tail ) {
+void CreateLine( LinePtr & head, LinePtr & tail, int length ) {
   if ( head == NULL ) {
     head = new Line ;
     head -> next = NULL ;
     tail = head ;
     head -> line = gLine ;
-    CreateColumn( head -> firstAppearAt, head -> firstAppearAt ) ;
+    CreateColumn( head -> firstAppearAt, head -> firstAppearAt, length ) ;
     return ;
   } // if 
   else if ( head -> line == gLine )
-    return CreateColumn( head -> firstAppearAt, head -> firstAppearAt ) ;   
+    return CreateColumn( head -> firstAppearAt, head -> firstAppearAt, length ) ;   
   else if ( head -> line > gLine )
     return CreateLine( head -> next, tail ) ;
   
-} //CreatLine()
+} // CreatLine()
 
-void CreateColumn( ColumnPtr & head, ColumnPtr & tail ) {
+void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) {
   if ( head == NULL ) {
     head = new Column ;
     head -> next = NULL ;
     tail = head ;
     head -> Column = gColumn ;
+    gColumn = gColumn + length ;
     return ;
   } // if  
   else
-     return CreateColumn( head -> next, tail ) ; 
+     return CreateColumn( head -> next, tail, length ) ; 
 } // CreateColumn()  
   
   
