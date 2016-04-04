@@ -55,6 +55,9 @@ charPtr GetToken( TokenType & type ) ;
 void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) ;
 void CreateLine( LinePtr & head, LinePtr & tail, int length ) ;
 void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) ;
+void PrintToken( TokenPtr walkr ) ;
+void PrintLine( LinePtr head ) ;
+void PrintColumn( int line, ColumnPtr head ) ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
@@ -81,6 +84,8 @@ int main(int argc, char** argv) {
   } // while
   
   gFront = walkr ;
+  
+  PrintToken( walkr ) ;
   
   printf( "歡迎來到\n" ) ;
   
@@ -323,7 +328,7 @@ void CreateLine( LinePtr & head, LinePtr & tail, int length ) {
   else if ( head -> line == gLine )
     return CreateColumn( head -> firstAppearAt, head -> firstAppearAt, length ) ;   
   else if ( head -> line > gLine )
-    return CreateLine( head -> next, tail ) ;
+    return CreateLine( head -> next, tail, length ) ;
   
 } // CreatLine()
 
@@ -332,7 +337,7 @@ void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) {
     head = new Column ;
     head -> next = NULL ;
     tail = head ;
-    head -> Column = gColumn ;
+    head -> column = gColumn ;
     gColumn = gColumn + length ;
     return ;
   } // if  
@@ -340,4 +345,33 @@ void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) {
      return CreateColumn( head -> next, tail, length ) ; 
 } // CreateColumn()  
   
+
+void PrintToken( TokenPtr walkr ) {
+  if ( walkr == NULL )
+    return ;
+  else {
+    printf( "%s ", walkr -> tokenStr ) ;
+    PrintLine( walkr -> firstAppearOn ) ;
+    printf( "\n" ) ;
+    return PrintToken( walkr -> next) ;
+  } // else
+} // PrintToken()  
+
+void PrintLine( LinePtr head ) {
+  if ( head == NULL )
+    return ;
+  else {
+    PrintColumn( head -> line, head -> firstAppearAt ) ;
+    return PrintLine( head -> next ) ;
+  } // else
+} // PrintLine()
+
+void PrintColumn( int line, ColumnPtr head ) {
+  if ( head == NULL )
+    return ;
+  else {
+    printf( "(%d,%d)", line, head -> column ) ;
+    return PrintColumn( line, head -> next ) ;
+  } // else
+} // PrintColumn()  
   
