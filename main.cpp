@@ -52,28 +52,35 @@ char gMoreTokenChar = '\0' ;
 typedef char Str100[100] ;
 
 charPtr GetToken( TokenType & type ) ;
+void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) ;
+void CreateLine( LinePtr & head, LinePtr & tail ) ;
+void CreateColumn( ColumnPtr & head, ColumnPtr & tail ) ;
 
 int main(int argc, char** argv) {
+  TokenPtr walkr = NULL ;
   TokenType type ;
   charPtr input ;
   int command = 0 ;
   
   input = new Str100 ;
   strcpy( input, GetToken( type ) ) ; 
+ 
   while ( strcmp( input, "END_OF_FILE" ) != 0 ) {
     if ( type == IDENTIFIER ) {
-
+      CreateToken( walkr, input, type ) ;
     } // if
     else if ( type == CONSTANT ) {
-
+      CreateToken( walkr, input, type ) ;
     } // if
     else if ( type == SPECIAL ) {
- 
+      CreateToken( walkr, input, type ) ;
     } // if
     
     type = NOTHING ;
     strcpy( input, GetToken( type ) ) ; 
   } // while
+  
+  gFront = walkr ;
   
   printf( "歡迎來到\n" ) ;
   
@@ -267,5 +274,72 @@ charPtr GetToken( TokenType & type ) {
 } // GetToken()
  
 
+void CreateToken( TokenPtr & walkr, charPtr input, TokenType type ) {
+  TokenPtr temp = NULL ;
+  
+  if ( walkr == NULL ) {
+    walkr = new Token ;
+    walkr -> tokenStr = new Str100 ;
+    strcpy( walkr -> tokenStr, input ) ;
+    walkr -> type = type ;
+    walkr -> next = NULL ;
+    walkr -> firstAppearOn = NULL ;
+    walkr -> lastAppearOn = NULL ;
+    gRear = walkr ;
+    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    return ; 
+  } // if
+  else if ( strcmp( input, walkr -> tokenStr ) < 0 ) {
+    temp = new Token ;
+    temp -> next = walkr ;
+    walkr = temp ;
+    walkr -> tokenStr = new Str100 ;
+    strcpy( walkr -> tokenStr, input ) ;
+    walkr -> type = type ;
+    walkr -> firstAppearOn = NULL ;
+    walkr -> lastAppearOn = NULL ;
+    CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    return ;
+  } // if  
+  else if ( strcmp( input, walkr -> tokenStr ) == 0 )
+    return CreateLine( walkr -> firstAppearOn, walkr -> lastAppearOn ) ;
+    
+  else if ( strcmp( input, walkr -> tokenStr ) > 0 )
+    return CreateToken( walkr -> next, input, type ) ;
+    
+} // CreatToken()
 
+
+void CreateLine( LinePtr & head, LinePtr & tail ) {
+  if ( head == NULL ) {
+    head = new Line ;
+    head -> next = NULL ;
+    tail = head ;
+    head -> line = gLine ;
+    CreateColumn( head -> firstAppearAt, head -> firstAppearAt ) ;
+  } // if 
+  else if ( head -> line == gLine ) {
+    
+    
+  } // if  
+  else if ( head -> line > gLine ) {
+    
+    
+    
+  } // if  
+    
+    
+  
+  
+} //CreatLine()
+
+void CreateColumn( ColumnPtr & head, ColumnPtr & tail ) {
+  
+  
+  
+  
+  
+  
+} // CreateColumn()  
+  
   
