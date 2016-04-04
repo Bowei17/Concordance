@@ -327,12 +327,15 @@ void CreateLine( LinePtr & head, LinePtr & tail ) {
 } //CreatLine()
 
 void CreateColumn( ColumnPtr & head, ColumnPtr & tail ) {
-  
-  
-  
-  
-  
-  
+  if ( head == NULL ) {
+    head = new Column ;
+    head -> next = NULL ;
+    tail = head ;
+    head -> Column = gColumn ;
+    return ;
+  } // if  
+  else
+     return CreateColumn( head -> next, tail ) ; 
 } // CreateColumn()  
   
   
