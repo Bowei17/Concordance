@@ -322,12 +322,12 @@ void CreateLine( LinePtr & head, LinePtr & tail, int length ) {
     head -> next = NULL ;
     tail = head ;
     head -> line = gLine ;
-    CreateColumn( head -> firstAppearAt, head -> firstAppearAt, length ) ;
+    CreateColumn( head -> firstAppearAt, head -> lastAppearAt, length ) ;
     return ;
   } // if 
-  else if ( head -> line == gLine )
-    return CreateColumn( head -> firstAppearAt, head -> firstAppearAt, length ) ;   
-  else if ( head -> line > gLine )
+  else if ( gLine == head -> line )
+    return CreateColumn( head -> firstAppearAt, head -> lastAppearAt, length ) ;   
+  else if ( gLine > head -> line )
     return CreateLine( head -> next, tail, length ) ;
   
 } // CreatLine()
@@ -341,8 +341,8 @@ void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) {
     gColumn = gColumn + length ;
     return ;
   } // if  
-  else
-     return CreateColumn( head -> next, tail, length ) ; 
+  else 
+    return CreateColumn( head -> next, tail, length ) ;   
 } // CreateColumn()  
   
 
