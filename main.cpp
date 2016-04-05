@@ -63,12 +63,14 @@ int SumIDENTIFIER() ;
 int SumCONSTANT() ;
 int SumSPECIAL() ;
 void PrintTheToken( charPtr input ) ;
+void PrintTheLine( int line ) ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
   TokenType type ;
   charPtr input ;
   int command = 0 ;
+  int searchLine = 0 ;
   
   input = new Str100 ;
   strcpy( input, GetToken( type ) ) ; 
@@ -110,13 +112,17 @@ int main(int argc, char** argv) {
       printf( "\n\n" ) ;
     } // if
     else if ( command == 4 ) {
-      
+      printf( "請輸入要指定的 line :" ) ;
+      scanf( "%d", &searchLine ) ;
+      printf( "\n" ) ;
+      PrintTheLine( searchLine ) ;
+      printf( "\n" ) ;
     } // if
     
     scanf( "%d", &command ) ;
   } // while  
   
-  printf( "Sucess!!" ) ;
+  printf( "byebye" ) ;
   return 0;
 } // main()
 
@@ -458,12 +464,28 @@ void PrintTheToken( charPtr input ) {
   
   if ( !printSuccess )
     printf( "查無此token : %s", input ) ;
+  return ;
 } // PrintTheToken()
 
+void PrintTheLine( int line ) {
+  TokenPtr walkr = gFront ;
+  
+  while ( walkr != NULL ) {
+    if ( TheTokenHasTheLine( walkr -> firstAppearOn, line ) )
+      printf( "%s\n", walkr -> tokenStr ) ;
+    
+    walkr = walkr -> next ;
+  } // while
+} // PrintTheLine()
 
 
-
-
-
-
-
+bool TheTokenHasTheLine( LinePtr head, int line ) {
+  while ( head != NULL ) {
+    if ( head -> line == line )
+      return true ;
+    
+    head = head -> next ;
+  } // while
+  
+  return false ;
+} // TheTokenHasTheLine()
