@@ -62,6 +62,7 @@ int SumAllKind() ;
 int SumIDENTIFIER() ;
 int SumCONSTANT() ;
 int SumSPECIAL() ;
+void PrintTheToken( charPtr input ) ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
@@ -102,7 +103,11 @@ int main(int argc, char** argv) {
       printf( "Case3 共 %d個\n\n", SumSPECIAL() ) ;
     } // if
     else if ( command == 3 ) {
-      
+      printf( "請輸入要搜尋的 token :" ) ;
+      scanf( "%s", input ) ;
+      printf( "\n" ) ;
+      PrintTheToken( input ) ;
+      printf( "\n\n" ) ;
     } // if
     else if ( command == 4 ) {
       
@@ -437,8 +442,23 @@ int SumSPECIAL() {
   return sum ;  
 } // SumSPECIAL()
 
-
-
+void PrintTheToken( charPtr input ) {
+  bool printSuccess = false ;
+  TokenPtr walkr = gFront ;
+  printf( "%s ", input ) ;
+  
+  while ( walkr != NULL ) {
+    if ( strcmp( walkr -> tokenStr, input ) == 0 ) {
+      PrintLine( walkr -> firstAppearOn ) ;
+      printSuccess = true ;
+    } // if
+    
+    walkr = walkr -> next ;
+  } // while
+  
+  if ( !printSuccess )
+    printf( "查無此token : %s", input ) ;
+} // PrintTheToken()
 
 
 
