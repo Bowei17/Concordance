@@ -64,6 +64,7 @@ int SumCONSTANT() ;
 int SumSPECIAL() ;
 void PrintTheToken( charPtr input ) ;
 void PrintTheLine( int line ) ;
+bool TheTokenHasTheLine( LinePtr head, int line ) ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
