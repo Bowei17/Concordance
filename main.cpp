@@ -73,15 +73,8 @@ int main(int argc, char** argv) {
   strcpy( input, GetToken( type ) ) ; 
  
   while ( strcmp( input, "END_OF_FILE" ) != 0 ) {
-    if ( type == IDENTIFIER ) {
+    if ( type != NOTHING )
       CreateToken( walkr, input, type ) ;
-    } // if
-    else if ( type == CONSTANT ) {
-      CreateToken( walkr, input, type ) ;
-    } // if
-    else if ( type == SPECIAL ) {
-      CreateToken( walkr, input, type ) ;
-    } // if
     
     type = NOTHING ;
     strcpy( input, GetToken( type ) ) ; 
@@ -287,6 +280,11 @@ charPtr GetToken( TokenType & type ) {
     type = NOTHING ;
     return returnPtr ;
   } // if  
+  else {  // 未知的(大空白?)
+    gColumn = gColumn + 1 ;
+    type = NOTHING ;
+    return returnPtr ;
+  } // else  
 } // GetToken()
  
 
