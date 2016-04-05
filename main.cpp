@@ -58,6 +58,7 @@ void CreateColumn( ColumnPtr & head, ColumnPtr & tail, int length ) ;
 void PrintToken( TokenPtr walkr ) ;
 void PrintLine( LinePtr head ) ;
 void PrintColumn( int line, ColumnPtr head ) ;
+int SumAllKind() ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
@@ -87,12 +88,17 @@ int main(int argc, char** argv) {
   
   PrintToken( walkr ) ;
   
-  printf( "\n歡迎來到\n" ) ;
+  printf( "\n請輸入指令:\n" ) ;
+  printf( "1.總共有多少種 token\n" ) ;
+  printf( "2.三種case各有多少 token\n" ) ;
+  printf( "3.印出指定 token 的位置 (line number,column number) (要排序)\n)" ) ;
+  printf( "1.印出所指定的那一 line 出現哪些 token (要排序)\n" ) ;
+  printf( "5.結束\n\n" ) ;
   
   scanf( "%d", &command ) ;
   while ( command != 5 ) {
     if ( command == 1 ) {
-      
+      printf( "總共%d種", SumAllKind() ) ;
     } // if
     else if ( command == 2 ) {
       
@@ -375,4 +381,14 @@ void PrintColumn( int line, ColumnPtr head ) {
   } // else
 } // PrintColumn()
 
-
+int SumAllKind( ) {
+  TokenPtr walkr = gFront ;
+  int sum = 0 ;
+  
+  while ( walkr != NULL ) {
+    sum = sum + 1 ;
+    walkr = walkr -> next ;
+  } // while
+  
+  return sum ;
+} // SumAllKind()
