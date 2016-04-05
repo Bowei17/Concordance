@@ -59,6 +59,9 @@ void PrintToken( TokenPtr walkr ) ;
 void PrintLine( LinePtr head ) ;
 void PrintColumn( int line, ColumnPtr head ) ;
 int SumAllKind() ;
+int SumIDENTIFIER() ;
+int SumCONSTANT() ;
+int SumSPECIAL() ;
 
 int main(int argc, char** argv) {
   TokenPtr walkr = NULL ;
@@ -92,16 +95,18 @@ int main(int argc, char** argv) {
   printf( "1.總共有多少種 token\n" ) ;
   printf( "2.三種case各有多少 token\n" ) ;
   printf( "3.印出指定 token 的位置 (line number,column number) (要排序)\n)" ) ;
-  printf( "1.印出所指定的那一 line 出現哪些 token (要排序)\n" ) ;
+  printf( "4.印出所指定的那一 line 出現哪些 token (要排序)\n" ) ;
   printf( "5.結束\n\n" ) ;
   
   scanf( "%d", &command ) ;
   while ( command != 5 ) {
     if ( command == 1 ) {
-      printf( "總共%d種", SumAllKind() ) ;
+      printf( "總共%d種\n\n", SumAllKind() ) ;
     } // if
     else if ( command == 2 ) {
-      
+      printf( "Case1 共 %d個\n", SumIDENTIFIER() ) ;
+      printf( "Case2 共 %d個\n", SumCONSTANT() ) ;
+      printf( "Case3 共 %d個\n\n", SumSPECIAL() ) ;
     } // if
     else if ( command == 3 ) {
       
@@ -381,6 +386,8 @@ void PrintColumn( int line, ColumnPtr head ) {
   } // else
 } // PrintColumn()
 
+
+
 int SumAllKind( ) {
   TokenPtr walkr = gFront ;
   int sum = 0 ;
@@ -392,3 +399,53 @@ int SumAllKind( ) {
   
   return sum ;
 } // SumAllKind()
+
+int SumIDENTIFIER() {
+  TokenPtr walkr = gFront ;
+  int sum = 0 ;
+  
+  while ( walkr != NULL ) {
+    if ( walkr -> type == IDENTIFIER )
+      sum = sum + 1 ;
+    walkr = walkr -> next ;
+  } // while
+  
+  return sum ;  
+} // SumIDENTIFIER()
+
+int SumCONSTANT() {
+  TokenPtr walkr = gFront ;
+  int sum = 0 ;
+  
+  while ( walkr != NULL ) {
+    if ( walkr -> type == CONSTANT )
+      sum = sum + 1 ;
+    walkr = walkr -> next ;
+  } // while
+  
+  return sum ; 
+} // SumCONSTANT()
+
+int SumSPECIAL() {
+  TokenPtr walkr = gFront ;
+  int sum = 0 ;
+  
+  while ( walkr != NULL ) {
+    if ( walkr -> type == SPECIAL )
+      sum = sum + 1 ;
+    walkr = walkr -> next ;
+  } // while
+  
+  return sum ;  
+} // SumSPECIAL()
+
+
+
+
+
+
+
+
+
+
+
