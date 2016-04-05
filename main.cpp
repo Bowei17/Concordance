@@ -353,7 +353,7 @@ void PrintToken( TokenPtr walkr ) {
     printf( "%s ", walkr -> tokenStr ) ;
     PrintLine( walkr -> firstAppearOn ) ;
     printf( "\n" ) ;
-    return PrintToken( walkr -> next) ;
+    return PrintToken( walkr -> next ) ;
   } // else
 } // PrintToken()  
 
@@ -373,5 +373,34 @@ void PrintColumn( int line, ColumnPtr head ) {
     printf( "(%d,%d)", line, head -> column ) ;
     return PrintColumn( line, head -> next ) ;
   } // else
-} // PrintColumn()  
+} // PrintColumn()
+
+/* void PrintToken( TokenPtr walkr ) {
+  LinePtr lineWalkr = NULL ;
+  ColumnPtr columnWalkr = NULL ;
+  if ( walkr != NULL ) {
+    lineWalkr = walkr -> firstAppearOn ;
+    if ( lineWalkr != NULL )
+      columnWalkr = lineWalkr -> firstAppearAt ;
+    
+  } // if  
   
+  while ( walkr != NULL ) {
+    printf( "%s ", walkr -> tokenStr ) ;
+    while ( lineWalkr != NULL ) {
+      while ( columnWalkr != NULL ) {
+        printf( "(%d,%d)", lineWalkr -> line, columnWalkr -> column ) ;
+        columnWalkr = columnWalkr -> next ;
+      } // while
+      
+      lineWalkr = lineWalkr -> next ;
+      columnWalkr = lineWalkr -> firstAppearAt ;
+    } // while  
+    
+    walkr = walkr -> next ;
+    lineWalkr = walkr -> firstAppearOn ;
+  } // while
+  
+  
+  
+} // PrintToken()  */
