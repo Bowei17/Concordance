@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
   
   PrintToken( walkr ) ;
   
-  printf( "歡迎來到\n" ) ;
+  printf( "\n歡迎來到\n" ) ;
   
   scanf( "%d", &command ) ;
   while ( command != 5 ) {
@@ -375,32 +375,4 @@ void PrintColumn( int line, ColumnPtr head ) {
   } // else
 } // PrintColumn()
 
-/* void PrintToken( TokenPtr walkr ) {
-  LinePtr lineWalkr = NULL ;
-  ColumnPtr columnWalkr = NULL ;
-  if ( walkr != NULL ) {
-    lineWalkr = walkr -> firstAppearOn ;
-    if ( lineWalkr != NULL )
-      columnWalkr = lineWalkr -> firstAppearAt ;
-    
-  } // if  
-  
-  while ( walkr != NULL ) {
-    printf( "%s ", walkr -> tokenStr ) ;
-    while ( lineWalkr != NULL ) {
-      while ( columnWalkr != NULL ) {
-        printf( "(%d,%d)", lineWalkr -> line, columnWalkr -> column ) ;
-        columnWalkr = columnWalkr -> next ;
-      } // while
-      
-      lineWalkr = lineWalkr -> next ;
-      columnWalkr = lineWalkr -> firstAppearAt ;
-    } // while  
-    
-    walkr = walkr -> next ;
-    lineWalkr = walkr -> firstAppearOn ;
-  } // while
-  
-  
-  
-} // PrintToken()  */
+
